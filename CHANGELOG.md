@@ -17,6 +17,12 @@
 - Dont execute app start integration if tracing is disabled ([#3026](https://github.com/getsentry/sentry-dart/pull/3026))
 - Set Firebase Remote Config flags on integration initialization ([#3008](https://github.com/getsentry/sentry-dart/pull/3008))
 
+### Dependencies
+
+- Bump Android SDK from v8.12.0 to v8.16.0 ([#3024](https://github.com/getsentry/sentry-dart/pull/3024))
+  - [changelog](https://github.com/getsentry/sentry-java/blob/main/CHANGELOG.md#8160)
+  - [diff](https://github.com/getsentry/sentry-java/compare/8.12.0...8.16.0)
+
 ## 9.1.0
 
 ### Features
