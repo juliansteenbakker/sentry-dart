@@ -225,7 +225,7 @@ class SentryFlutterPlugin :
         refreshRate = display.refreshRate.toInt()
       }
     } else {
-      val display =
+      @Suppress("DEPRECATION") val display =
         activity
           ?.get()
           ?.window
@@ -447,6 +447,7 @@ class SentryFlutterPlugin :
     private fun crash() {
       val exception = RuntimeException("FlutterSentry Native Integration: Sample RuntimeException")
       val mainThread = Looper.getMainLooper().thread
+      @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
       mainThread.uncaughtExceptionHandler.uncaughtException(mainThread, exception)
       mainThread.join(NATIVE_CRASH_WAIT_TIME)
     }
