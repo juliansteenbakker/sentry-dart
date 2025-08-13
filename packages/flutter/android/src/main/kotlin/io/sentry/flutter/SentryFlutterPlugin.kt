@@ -15,10 +15,9 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.sentry.Breadcrumb
 import io.sentry.DateUtils
-import io.sentry.HubAdapter
+import io.sentry.ScopesAdapter
 import io.sentry.Sentry
 import io.sentry.android.core.InternalSentrySdk
-import io.sentry.android.core.LoadClass
 import io.sentry.android.core.SentryAndroid
 import io.sentry.android.core.SentryAndroidOptions
 import io.sentry.android.core.performance.AppStartMetrics
@@ -26,7 +25,6 @@ import io.sentry.android.core.performance.TimeSpan
 import io.sentry.android.replay.ReplayIntegration
 import io.sentry.android.replay.ScreenshotRecorderConfig
 import io.sentry.protocol.DebugImage
-import io.sentry.protocol.SentryId
 import io.sentry.protocol.User
 import io.sentry.transport.CurrentDateProvider
 import java.lang.ref.WeakReference
@@ -288,7 +286,7 @@ class SentryFlutterPlugin :
     result: Result,
   ) {
     if (user != null) {
-      val options = HubAdapter.getInstance().options
+      val options = ScopesAdapter.getInstance().options
       val userInstance = User.fromMap(user, options)
       Sentry.setUser(userInstance)
     } else {
@@ -302,7 +300,7 @@ class SentryFlutterPlugin :
     result: Result,
   ) {
     if (breadcrumb != null) {
-      val options = HubAdapter.getInstance().options
+      val options = ScopesAdapter.getInstance().options
       val breadcrumbInstance = Breadcrumb.fromMap(breadcrumb, options)
       Sentry.addBreadcrumb(breadcrumbInstance)
     }
@@ -398,7 +396,7 @@ class SentryFlutterPlugin :
     call: MethodCall,
     result: Result,
   ) {
-    val options = HubAdapter.getInstance().options as SentryAndroidOptions
+    val options = ScopesAdapter.getInstance().options as SentryAndroidOptions
 
     val addresses = call.arguments() as List<String>? ?: listOf()
     val debugImages =
@@ -432,7 +430,7 @@ class SentryFlutterPlugin :
     )
 
   private fun closeNativeSdk(result: Result) {
-    HubAdapter.getInstance().close()
+    ScopesAdapter.getInstance().close()
 
     result.success("")
   }
@@ -464,7 +462,7 @@ class SentryFlutterPlugin :
   }
 
   private fun loadContexts(result: Result) {
-    val options = HubAdapter.getInstance().options
+    val options = ScopesAdapter.getInstance().options
     if (options !is SentryAndroidOptions) {
       result.success(null)
       return
